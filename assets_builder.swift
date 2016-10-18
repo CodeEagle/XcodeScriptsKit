@@ -46,7 +46,7 @@ extension ResourceGenerator {
 
     fileprivate func start() {
         let list = files(inDirectory: resourcePath)
-        guard list.count > 0 else { writeOutput(of: "\nNo file found in path:\(resourcePath)"); return }
+        guard list.count > 0 else { writeOutput(of: ""); return }
         let desc = loopDirectory(at: resourcePath, name: fileName, parent: "", isRoot: true)
         writeOutput(of: desc)
     }
