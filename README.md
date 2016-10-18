@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">XcodeScriptsKit</h1>
 <pre align="center">
-A set of scripts that to help you more easier work with your swift project
+A set of scripts that helping you more easier to work with your swift project
 </pre>
 
 Features
