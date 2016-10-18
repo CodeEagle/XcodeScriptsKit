@@ -63,6 +63,7 @@ extension ResourceGenerator {
         }
         desc = "\nstruct \(sName) {\n"
         if isRoot {
+          desc += "/// if using this in framework project, change bundle to`\(bundleName).bundle = Bundle(for: <#YourClass#>.self)`\n"
           desc += "static var bundle: Bundle = Bundle.main\n"
         }
         var properties = ""

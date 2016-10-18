@@ -17,9 +17,12 @@ Installtion
 ---
 `curl -fsSL https://raw.githubusercontent.com/CodeEagle/XcodeScriptsKit/master/install.sh | sh`
 
+⚠️Caveat
+---
+if you'r using image generator in framework project, change bundle to framework own bundle, see [detail](https://github.com/CodeEagle/XcodeScriptsKit/blob/master/assets_builder.swift#L66) for more, or in your generated code
+
 Usage
 ---
-
 1. new run script in Xcode Build Phase before compile source
 2. configure and paste code to it
 
