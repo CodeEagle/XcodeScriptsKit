@@ -56,7 +56,7 @@ RELEASE=0
 if [ "${CONFIGURATION=}" == "Release" ]; then
   RELEASE=1
 fi
-if ["$ENABLE_BUILD_NUMBER" == "1"]; then
+if [ "$ENABLE_BUILD_NUMBER" = "1" ]; then
   "$BUILD_NUMBER" "$BUILD_NUMBER_PLIST_PATH" "$INFO_PLIST_PATH" "$RELEASE"
 fi
 
