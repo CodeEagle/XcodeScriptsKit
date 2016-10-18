@@ -10,6 +10,7 @@ final class ResourceGenerator {
     fileprivate var fm = FileManager.default
     fileprivate let builderFile: String
     fileprivate var fileName: String = "Assets.xcassets"
+    fileprivate var bundleName: String = "Assets.bundle"
 
     init() {
         var arguments: [String] = CommandLine.arguments
@@ -56,8 +57,14 @@ extension ResourceGenerator {
         let list = files(inDirectory: dirPath)
         guard list.count > 0 else { return desc }
         var sName = "\(removeSymbol(from: name).capitalized)"
-        if isRoot { sName += "Image"}
+        if isRoot {
+          sName += "Image"
+          bundleName = "\(sName).bundle"
+        }
         desc = "\nstruct \(sName) {\n"
+        if isRoot {
+          desc += "static var bundle: Bundle = Bundle.main\n"
+        }
         var properties = ""
         var structs = ""
         let base = "\(parent)/\(name)"
@@ -68,7 +75,7 @@ extension ResourceGenerator {
             if item.hasSuffix(".imageset") {
                 let raw = item.replacingOccurrences(of: ".imageset", with: "")
                 let name = raw.replacingOccurrences(of: " ", with: "_")
-                properties += "static var \(name): UIImage { return UIImage(imageLiteralResourceName: \"\(raw)\") }\n"
+                properties += "static var \(name): UIImage { return UIImage(named: \"\(raw)\", in: \(bundleName), compatibleWith: nil)! }\n"
             } else if !item.hasSuffix(".appiconset") {
                 let vname = varName(of: item)
                 let subDesc = loopDirectory(at: p, name: vname, parent: base)
