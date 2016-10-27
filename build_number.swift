@@ -7,8 +7,8 @@ func addBuildNumber() {
     let totalKey = "total"
     var arguments: [String] = CommandLine.arguments
     let dir = arguments.removeFirst() as NSString
-    let buildInfo = arguments.removeFirst() as NSString
-    let infoPlistpath = arguments.removeFirst() as NSString
+    let buildInfo = arguments.removeFirst()
+    let infoPlistpath = arguments.removeFirst()
     var userInfo: [String : Any] = [:]
     if let info = NSDictionary(contentsOfFile: buildInfo) as? [String : Any] { userInfo = info }
     let array = dir.components(separatedBy: "/")
