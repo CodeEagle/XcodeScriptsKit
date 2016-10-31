@@ -70,16 +70,12 @@ $project.targets.each do |target|
    osType = plist["CFBundlePackageType"]
 
 
-
+   schemeFolder = Xcodeproj::XCScheme.user_data_dir($project_path)
+   schemePath = "#{target_name}.xcscheme"
+   pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
 
    if osType == "APPL"  # disable system log
-
-      schemeFolder = Xcodeproj::XCScheme.user_data_dir($project_path)
-      schemePath = "#{target_name}.xcscheme"
-      pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
-      shared_already = false
       if File.exists?(pp) == false
-         shared_already = true
          schemeFolder = Xcodeproj::XCScheme.shared_data_dir($project_path)
          pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
       end
@@ -96,9 +92,9 @@ $project.targets.each do |target|
       scheme.save!
       need_add_copy_script = $has_framworks
    elsif osType == "FMWK"  # shared framework
-      if shared_already == false
-         Xcodeproj::XCScheme.share_scheme($project_path, target_name)
-      end
+     if File.exists?(pp) == true
+        Xcodeproj::XCScheme.share_scheme($project_path, target_name)
+     end
    elsif osType == "BNDL"
       need_copy_file_action = $has_framworks
    end
