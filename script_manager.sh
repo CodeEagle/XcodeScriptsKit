@@ -11,11 +11,14 @@
 # IMAGE_ASSETS_PATH=$6 # path to *.xcassets folder
 # TO_FORMAT_CODE_PATH=$7 # folder that needs code format
 # LANGUAGE_FILE_PATH=$8 # language file path,such as ".../zh-Hans.lproj/Localizable.strings"
+# EXCEPT_TARGET_THAT_NOT_CARTHAGING=$9 # not need Integration with carthage target name
 # cd ~/bin/XcodeScriptsKit && ./script_manager.sh "1" "INFO_PLIST_PATH" "BUILD_NUMBER_PLIST_PATH" "GENERATED_CODE_PREFIX" "GENERATED_CODE_PATH" "IMAGE_ASSETS_PATH" "TO_FORMAT_CODE_PATH" "LANGUAGE_FILE_PATH"
 #
 # and add Resource folder to Library as file referrence
 # Get base path to project
-
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 ENABLE_BUILD_NUMBER=$1
 INFO_PLIST_PATH=$2
@@ -35,6 +38,7 @@ TOOLS_LOCATION="/Users/$USER/bin/XcodeScriptsKit"
 RESOURCE_BUILDER="$TOOLS_LOCATION/assets_builder.swift"
 BUILD_NUMBER="$TOOLS_LOCATION/build_number.swift"
 FORMAT_CODE="$TOOLS_LOCATION/format_code.swift"
+CARTHAGE_HELPER="$TOOLS_LOCATION/carthage_helper.rb"
 
 RESOURCE_OUTPUT_PATH=$GENERATED_LOCATION"Assets.swift"
 echo There are $# arguments
