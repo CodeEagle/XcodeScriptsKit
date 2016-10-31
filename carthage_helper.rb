@@ -70,19 +70,21 @@ $project.targets.each do |target|
    osType = plist["CFBundlePackageType"]
 
 
-   schemeFolder = Xcodeproj::XCScheme.user_data_dir($project_path)
-   schemePath = "#{target_name}.xcscheme"
-   pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
-   shared_already = false
-   if File.exists?(pp) == false
-      shared_already = true
-      schemeFolder = Xcodeproj::XCScheme.shared_data_dir($project_path)
-      pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
-   end
-   scheme = Xcodeproj::XCScheme.new(pp)
 
 
    if osType == "APPL"  # disable system log
+
+      schemeFolder = Xcodeproj::XCScheme.user_data_dir($project_path)
+      schemePath = "#{target_name}.xcscheme"
+      pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
+      shared_already = false
+      if File.exists?(pp) == false
+         shared_already = true
+         schemeFolder = Xcodeproj::XCScheme.shared_data_dir($project_path)
+         pp = [Dir.pwd, "/", schemeFolder, "/", schemePath].join('')
+      end
+      scheme = Xcodeproj::XCScheme.new(pp)
+
       param        = {}
       param[:key]  = "OS_ACTIVITY_MODE"
       param[:value] = "Disable"
