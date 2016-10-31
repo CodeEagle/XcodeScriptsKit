@@ -237,3 +237,4 @@ $project.targets.each do |target|
    end
 end
 $project.save
+puts "🍻: carthelper done"
