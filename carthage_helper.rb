@@ -2,16 +2,16 @@ require 'xcodeproj'
 require 'digest/sha1'
 
 if ARGV.length < 1
-   abort("❌:需要传入项目地址，和不需要构建的 target，用法(不包括`[]`符号): ruby init.rb [*.xcodeproj的目录] [不需要处理的target(可选)]")
+   abort("❌:usage ruby carthage_helper.rb path/to/*.xcodeproj except/target(optional)")
 end
 if ARGV[0] == "help"
-  abort("确保 Carthage📁 和 *.xcodeproj 在同一层级的目录下，否则 Carthage 设置不能成功")
+  abort("make sure Carthage📁 and *.xcodeproj in the same folder，or Carthage Helper not gonna work correctly")
 end
 Dir.chdir "#{ARGV[0]}"
 $except_target = "#{ARGV[1]}"
 
 if Dir["*.xcodeproj"].length == 0
-   abort("❌:该目录下找不到 .xcodeproj 文件")
+   abort("❌:not found *.xcodeproj in path:#{ARGV[0]}")
 end
 $project_path = Dir["*.xcodeproj"][0]
 $builded_frameworks = Dir["Carthage/Build/iOS/*.framework"]
@@ -204,7 +204,7 @@ $project.targets.each do |target|
    if target.shell_script_build_phases.length > 0
       target.shell_script_build_phases.each do |script|
          if script.name == scriptName
-            puts script.remove_from_project
+            # puts script.remove_from_project
             break
          end
       end
@@ -228,7 +228,6 @@ $project.targets.each do |target|
       end
    end
 
-
    if need_copy_file_action == true
       action = target.new_copy_files_build_phase(actionName)
       action.symbol_dst_subfolder_spec=(:frameworks)
@@ -248,4 +247,4 @@ $project.targets.each do |target|
    end
 end
 $project.save
-puts "🍻: carthelper done"
+puts "🍻: carthage helper done"
