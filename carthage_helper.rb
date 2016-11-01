@@ -35,8 +35,16 @@ if File.exists?(carthage_frameworks) == true
     raw = line.gsub! '[', ''
     raw = raw.gsub! ']', ''
     raw = raw.gsub! '"', ''
-    raw = raw.gsub! ' ', ''
-    raw = raw.gsub! "\n", ""
+    rawNext = raw.gsub! ' ', ''
+    if rawNext != nil
+      raw = rawNext
+    else
+      rawNext = raw.gsub! "\n", ""
+      if rawNext != nil
+        raw = rawNext
+      end
+    end
+
     $old_frameworks = raw.split(",")
   end
   f.close
@@ -143,7 +151,9 @@ $project.targets.each do |target|
    target.frameworks_build_phases.sort
 
    # add path for search
+
    $project.build_configurations.each do |conf|
+
       configuration = target.add_build_configuration('Debug', :debug)
       if conf.name == "Release"
          configuration = target.add_build_configuration('Release', :release)
@@ -184,6 +194,9 @@ $project.targets.each do |target|
         end
       end
       settings['FRAMEWORK_SEARCH_PATHS'] = search_paths
+
+      #自动降级到 9.0
+      conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = "9.0"
    end
 
    # add carthage copy script
