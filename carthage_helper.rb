@@ -214,7 +214,7 @@ $project.targets.each do |target|
    if target.shell_script_build_phases.length > 0
       target.shell_script_build_phases.each do |script|
          if script.name == scriptName
-            # puts script.remove_from_project
+            script.remove_from_project
             break
          end
       end
