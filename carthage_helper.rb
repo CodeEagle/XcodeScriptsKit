@@ -42,20 +42,23 @@ $old_frameworks = Array.new
 if File.exists?(carthage_frameworks) == true
   f = File.open(carthage_frameworks, "r")
   f.each_line do |line|
-    raw = line.gsub! '[', ''
-    raw = raw.gsub! ']', ''
-    raw = raw.gsub! '"', ''
-    rawNext = raw.gsub! ' ', ''
-    if rawNext != nil
-      raw = rawNext
-    else
-      rawNext = raw.gsub! "\n", ""
+    if line.strip != "[]"
+      raw = line.gsub! '[', ''
+      raw = raw.gsub! ']', ''
+
+      raw = raw.gsub! '"', ''
+      rawNext = raw.gsub! ' ', ''
       if rawNext != nil
         raw = rawNext
+      else
+        rawNext = raw.gsub! "\n", ""
+        if rawNext != nil
+          raw = rawNext
+        end
       end
-    end
 
-    $old_frameworks = raw.split(",")
+      $old_frameworks = raw.split(",")
+    end
   end
   f.close
 end
@@ -78,7 +81,6 @@ $project.targets.each do |target|
      next
    end
 
-
    need_add_copy_script = false
    need_copy_file_action = false
 
@@ -99,14 +101,21 @@ $project.targets.each do |target|
       end
       scheme = Xcodeproj::XCScheme.new(pp)
 
-      param        = {}
-      param[:key]  = "OS_ACTIVITY_MODE"
-      param[:value] = "Disable"
-      disableLog = Xcodeproj::XCScheme::EnvironmentVariable.new(param)
+      disableLog = Xcodeproj::XCScheme::EnvironmentVariable.new(:key => 'OS_ACTIVITY_MODE', :value => 'Disable')
+      empty = false
       if scheme.launch_action.environment_variables.class == NilClass
-         scheme.launch_action.environment_variables = Hash.new
+        empty = true
       end
-      scheme.launch_action.environment_variables.assign_variable(disableLog)
+      if scheme.launch_action.environment_variables.all_variables == []
+        empty = true
+      end
+      if empty
+        envs = Xcodeproj::XCScheme::EnvironmentVariables.new()
+        envs.assign_variable(disableLog)
+        scheme.launch_action.environment_variables = envs
+      else
+        scheme.launch_action.environment_variables.assign_variable(disableLog)
+      end
       scheme.save!
       need_add_copy_script = $has_framworks
    elsif osType == "FMWK"  # shared framework
@@ -186,7 +195,6 @@ $project.targets.each do |target|
         end
       end
       settings['LD_RUNPATH_SEARCH_PATHS'] = run_paths
-
 
       search_paths = settings['FRAMEWORK_SEARCH_PATHS']
       path_class = search_paths.class
