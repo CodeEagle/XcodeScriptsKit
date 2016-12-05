@@ -28,6 +28,7 @@ final class ResourceGenerator {
         basePath = (p1 as NSString).deletingLastPathComponent
         resourcePath = p1
         outputPath = p2
+        if resourcePath == "" { return }
     }
 }
 // MARK: - Loop
