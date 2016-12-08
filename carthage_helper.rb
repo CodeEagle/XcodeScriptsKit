@@ -129,6 +129,9 @@ $project.targets.each do |target|
    # add framework to linked frameworks
    input_paths = Array.new
    $builded_frameworks.each do |toAdd|
+      if toAdd.include?(target.product_name)
+         next
+      end
      input_paths.push("$(SRCROOT)/#{toAdd}")
      addOnce = false
      $project.frameworks_group.children.each do |child|
@@ -235,7 +238,7 @@ $project.targets.each do |target|
       newScript.input_paths = input_paths
    end
 
-# unitext
+# unitest
    actionName = "Copy Carthage frameworks"
    if target.copy_files_build_phases.length > 0
       target.copy_files_build_phases.each do |script|
