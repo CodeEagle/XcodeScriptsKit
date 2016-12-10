@@ -53,9 +53,11 @@ echo  argument: $8
 
 mkdir -p "$GENERATED_CODE_PATH"
 chmod 755 "$RESOURCE_BUILDER"
-# set -x
-# 执行文件            资源目录                  输出文件
-"$RESOURCE_BUILDER" "$IMAGE_ASSETS_PATH" "$RESOURCE_OUTPUT_PATH"
+if [ "$IMAGE_ASSETS_PATH" != "" ]; then
+  # set -x
+  # 执行文件            资源目录                  输出文件
+  "$RESOURCE_BUILDER" "$IMAGE_ASSETS_PATH" "$RESOURCE_OUTPUT_PATH"
+fi
 RELEASE=0
 if [ "${CONFIGURATION=}" == "Release" ]; then
   RELEASE=1
