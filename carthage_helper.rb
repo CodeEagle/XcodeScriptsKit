@@ -216,8 +216,8 @@ $project.targets.each do |target|
       end
       settings['FRAMEWORK_SEARCH_PATHS'] = search_paths
 
-      #自动降级到 9.0
-      conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = "9.0"
+      #自动降级到 8.0
+      conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = "8.0"
    end
 
    # add carthage copy script
