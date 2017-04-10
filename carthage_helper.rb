@@ -20,9 +20,9 @@ $project_path = Dir["*.xcodeproj"][0]
 full_srt_path = [ARGV[0],"/",$project_path].join("")
 full_dst_path = [ARGV[0],"/project_backup"].join("")
 if Dir.exists?(full_dst_path) == false
-  puts "🤖 backup once  for  current project"
-  Dir.mkdir(full_dst_path, 0700)
-  FileUtils.cp_r(full_srt_path, full_dst_path)
+  # puts "🤖 backup once  for  current project"
+  # Dir.mkdir(full_dst_path, 0700)
+  # FileUtils.cp_r(full_srt_path, full_dst_path)
 end
 $builded_frameworks = Dir["Carthage/Build/iOS/*.framework"]
 $has_framworks = $builded_frameworks.length > 0
