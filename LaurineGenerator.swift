@@ -1230,8 +1230,9 @@ class Localization {
         writer.writeRequiredExtensions()
 
         // Generate actual localization structures
-        writer.writeMarkWithName(name: "Localizations")
-        let bundle = TemplateFactory.templateForSwiftStaticVarBundle(contentLevel: 1)
+        let name = "Localizations"
+        writer.writeMarkWithName(name: name)
+        let bundle = TemplateFactory.templateForSwiftStaticVarBundle(name: name, contentLevel: 1)
         let content = bundle + "\n" + self.codifySwift(expandedStructure: self.objectStructure)
         writer.writeCodeStructure(structure: self.swiftStructWithContent(content: content, structName: BASE_CLASS_NAME, contentLevel: 0))
 
@@ -1857,7 +1858,7 @@ class TemplateFactory {
     class func templateForSwiftStructWithName(name : String, content : String, contentLevel : Int) -> String {
 
         return "\n"
-            + TemplateFactory.contentIndentForLevel(contentLevel: contentLevel) + "public struct \(name) {\n"
+            + TemplateFactory.contentIndentForLevel(contentLevel: contentLevel) + "public class \(name) {\n"
             + "\n"
             + "\(content)\n"
             + TemplateFactory.contentIndentForLevel(contentLevel: contentLevel) + "}"
@@ -1879,10 +1880,10 @@ class TemplateFactory {
             + TemplateFactory.contentIndentForLevel(contentLevel: contentLevel) + "}\n"
     }
 
-    class func templateForSwiftStaticVarBundle(contentLevel: Int) -> String {
+    class func templateForSwiftStaticVarBundle(name: String, contentLevel: Int) -> String {
         let indent = TemplateFactory.contentIndentForLevel(contentLevel: contentLevel)
         return indent + "/// Bundle for transilation\n"
-            + indent + "public static  var bundle: Bundle = Bundle.main\n"
+            + indent + "public static var bundle: Bundle = Bundle(for: \(name).self)\n"
     }
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     // MARK: - Public - ObjC templates
