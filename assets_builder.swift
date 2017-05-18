@@ -49,6 +49,7 @@ extension ResourceGenerator {
     fileprivate func start() {
         let list = files(inDirectory: resourcePath)
         guard list.count > 0 else { writeOutput(of: ""); return }
+        if resourcePath.hasSuffix(".xcassets") == false { return }
         let desc = loopDirectory(at: resourcePath, name: fileName, parent: "", isRoot: true)
         writeOutput(of: desc)
     }
