@@ -156,7 +156,7 @@ private extension ResourceGenerator {
     func formatCode(at path: String) {
         let task = Process()
         task.launchPath = formatterPath
-        task.arguments = [path, "-i", "4", path]
+        task.arguments = [path, "--indent", "4", path]
         task.launch()
     }
 }

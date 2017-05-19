@@ -40,7 +40,7 @@ func loop(at folder: String) {
 func formatCode(at path: String, exePath: String) {
     let task = Process()
     task.launchPath = exePath
-    task.arguments = [path, "-i", "4", path]
+    task.arguments = [path, "--indent", "4", path]
     task.launch()
 }
 
