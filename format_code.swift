@@ -25,16 +25,7 @@ func loop(at folder: String) {
   var arguments: [String] = CommandLine.arguments
   let dir = arguments.removeFirst() as NSString
   let formatterPath = dir.deletingLastPathComponent + "/swiftformat"
-  let contents = files(inDirectory: folder)
-  for item in contents {
-    if item == ".DS_Store" { continue }
-    let itemPath = folder + "/\(item)"
-    if path(isDirectory: itemPath) {
-      loop(at: itemPath)
-    } else if item.hasSuffix(".swift") {
-      formatCode(at: itemPath, exePath: formatterPath)
-    }
-  }
+  formatCode(at: folder, exePath: formatterPath)
 }
 
 func formatCode(at path: String, exePath: String) {
