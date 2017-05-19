@@ -31,7 +31,7 @@ IMAGE_ASSETS_PATH=$6
 TO_FORMAT_CODE_PATH=$7
 LANGUAGE_FILE_PATH=$8
 GENERATED_LOCATION="$GENERATED_CODE_PATH$GENERATED_CODE_PREFIX"
-echo "GENERATED_LOCATION $GENERATED_LOCATION"
+
 BASE_PATH="$PROJECT_DIR"
 # RESOURCE_BUILDER
 TOOLS_LOCATION="/Users/$USER/bin/XcodeScriptsKit"
@@ -41,16 +41,16 @@ FORMAT_CODE="$TOOLS_LOCATION/format_code.swift"
 CARTHAGE_HELPER="$TOOLS_LOCATION/carthage_helper.rb"
 
 RESOURCE_OUTPUT_PATH=$GENERATED_LOCATION"Assets.swift"
-echo "RESOURCE_OUTPUT_PATH $RESOURCE_OUTPUT_PATH"
+
 echo There are $# arguments
-echo  argument: $1
-echo  argument: $2
-echo  argument: $3
-echo  argument: $4
-echo  argument: $5
-echo  argument: $6
-echo  argument: $7
-echo  argument: $8
+echo  argument 1: $1
+echo  argument 2: $2
+echo  argument 3: $3
+echo  argument 4: $4
+echo  argument 5: $5
+echo  argument 6: $6
+echo  argument 7: $7
+echo  argument 8: $8
 
 mkdir -p "$GENERATED_CODE_PATH"
 chmod 755 "$RESOURCE_BUILDER"
